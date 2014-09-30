@@ -30,6 +30,7 @@ import me.gladwell.eclipse.m2e.android.project.MavenAndroidProject;
 public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 
 	private MavenAndroidProject mavenAndroidProject;
+	private EclipseAndroidProject eclipseProject;
 	protected IClasspathEntry[] originalClasspathEntries;
 	protected ArrayList<IClasspathEntry> arrayEntries;
 
@@ -41,6 +42,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 			IClasspathDescriptor classpath) {
 
 		this.mavenAndroidProject = mavenAndroidProject;
+		this.eclipseProject = eclipseProject;
 		arrayEntries = new ArrayList<IClasspathEntry>();
 
 		IJavaProject javaproject = JavaCore.create(eclipseProject.getProject());
@@ -158,7 +160,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 		List<String> sourceRoots = mavenAndroidProject.getSourcePaths();
 
 		for (String sourceRoot : sourceRoots) {
-			if (sourceRoot.contains(entry.getPath().toOSString())) {
+			if (sourceRoot.contains(createEntryPath(entry))) {
 				return true;
 			}
 		}
@@ -166,7 +168,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	}
 
 	protected boolean hasAndroidFramework(IClasspathEntry entry) {
-		String path = entry.getPath().toString();
+		String path = createEntryPath(entry);
 		for (IClasspathEntry arrayEntry : arrayEntries) {
 			if (path.equals(AdtConstants.CONTAINER_FRAMEWORK) && arrayEntry.equals(entry)) {
 				return true;
@@ -176,7 +178,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	}
 
 	protected boolean hasMavenDependencies(IClasspathEntry entry) {
-		String path = entry.getPath().toString();
+		String path = createEntryPath(entry);
 		for (IClasspathEntry arrayEntry : arrayEntries) {
 			if (path.equals(IClasspathManager.CONTAINER_ID) && arrayEntry.equals(entry)) {
 				return true;
@@ -186,7 +188,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	}
 
 	protected boolean hasNonRuntimeDependencies(IClasspathEntry entry) {
-		String path = entry.getPath().toString();
+		String path = createEntryPath(entry);
 		for (IClasspathEntry arrayEntry : arrayEntries) {
 			if (path.equals(AndroidMavenPlugin.CONTAINER_NONRUNTIME_DEPENDENCIES) && arrayEntry.equals(entry)) {
 				return true;
@@ -196,7 +198,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	}
 
 	protected boolean hasAndroidLibraries(IClasspathEntry entry) {
-		String path = entry.getPath().toString();
+		String path = createEntryPath(entry);
 		for (IClasspathEntry arrayEntry : arrayEntries) {
 			if (path.equals(AdtConstants.CONTAINER_PRIVATE_LIBRARIES) && arrayEntry.equals(entry)) {
 				return true;
@@ -206,7 +208,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	}
 
 	protected boolean hasAndroidDependencies(IClasspathEntry entry) {
-		String path = entry.getPath().toString();
+		String path = createEntryPath(entry);
 		for (IClasspathEntry arrayEntry : arrayEntries) {
 			if (path.equals(AdtConstants.CONTAINER_DEPENDENCIES) && arrayEntry.equals(entry)) {
 				return true;
@@ -219,7 +221,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 		List<String> sourceRoots = mavenAndroidProject.getTestSourcePaths();
 
 		for (String sourceRoot : sourceRoots) {
-			if (sourceRoot.contains(entry.getPath().toOSString())) {
+			if (sourceRoot.contains(createEntryPath(entry))) {
 				return true;
 			}
 		}
@@ -229,7 +231,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	protected boolean hasResource(IClasspathEntry entry) {
 		List<Resource> resources = mavenAndroidProject.getResources();
 		for (Resource resource : resources) {
-			if (resource.getDirectory().contains(entry.getPath().toOSString())) {
+			if (resource.getDirectory().contains(createEntryPath(entry))) {
 				return true;
 			}
 		}
@@ -239,7 +241,7 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 	protected boolean hasTestResource(IClasspathEntry entry) {
 		List<Resource> resources = mavenAndroidProject.getTestResources();
 		for (Resource resource : resources) {
-			if (resource.getDirectory().contains(entry.getPath().toOSString())) {
+			if (resource.getDirectory().contains(createEntryPath(entry))) {
 				return true;
 			}
 		}
@@ -254,12 +256,22 @@ public class ReorderClasspathConfigurer implements RawClasspathConfigurer {
 
 	private IClasspathEntry findClasspathEntry(String substring) {
 		for (IClasspathEntry classpathEntry : originalClasspathEntries) {
-			String path = classpathEntry.getPath().toOSString();
+			
+			String path = createEntryPath(classpathEntry);
+			
 			if (substring.contains(path)) {
 				return classpathEntry;
 			}
 		}
 		return null;
+	}
+	
+	private String createEntryPath(IClasspathEntry entry) {
+		if (entry.getPath().toString().contains(eclipseProject.getProject().getName())) {
+			return entry.getPath().removeFirstSegments(1).toOSString();
+		} else {
+			return entry.getPath().toString();
+		}
 	}
 
 }
