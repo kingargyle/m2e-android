@@ -50,7 +50,7 @@ import org.eclipse.m2e.tests.common.JobHelpers;
 import org.eclipse.m2e.tests.common.WorkspaceHelpers;
 import org.eclipse.m2e.tests.common.JobHelpers.IJobMatcher;
 
-import com.android.ide.eclipse.adt.internal.sdk.Sdk;
+import org.eclipse.andmore.internal.sdk.Sdk;
 
 @SuppressWarnings("restriction")
 public abstract class AndroidMavenPluginTestCase extends AbstractMavenProjectTestCase {

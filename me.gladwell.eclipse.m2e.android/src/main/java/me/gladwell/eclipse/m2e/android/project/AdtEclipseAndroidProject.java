@@ -33,7 +33,7 @@ import org.eclipse.m2e.core.project.configurator.AbstractProjectConfigurator;
 import org.eclipse.m2e.jdt.IClasspathDescriptor;
 
 import com.android.SdkConstants;
-import org.eclipse.andmore.AdtConstants;
+import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.andmore.internal.project.ProjectHelper;
 import org.eclipse.andmore.internal.sdk.ProjectState;
 import org.eclipse.andmore.internal.sdk.Sdk;
@@ -65,7 +65,7 @@ public class AdtEclipseAndroidProject implements EclipseAndroidProject {
 
     public boolean isAndroidProject() {
         try {
-            return project.getProject().hasNature(AdtConstants.NATURE_DEFAULT);
+            return project.getProject().hasNature(AndmoreAndroidConstants.NATURE_DEFAULT);
         } catch (CoreException e) {
             throw new ProjectConfigurationException(e);
         }
@@ -74,7 +74,7 @@ public class AdtEclipseAndroidProject implements EclipseAndroidProject {
     public void setAndroidProject(boolean androidProject) {
         try {
             if (androidProject) {
-                AbstractProjectConfigurator.addNature(project, AdtConstants.NATURE_DEFAULT, null);
+                AbstractProjectConfigurator.addNature(project, AndmoreAndroidConstants.NATURE_DEFAULT, null);
             } else {
                 throw new UnsupportedOperationException();
             }
@@ -153,7 +153,7 @@ public class AdtEclipseAndroidProject implements EclipseAndroidProject {
     }
 
     public void setAssetsDirectory(File assets) {
-        IFolder link = project.getFolder(AdtConstants.WS_ASSETS);
+        IFolder link = project.getFolder(AndmoreAndroidConstants.WS_ASSETS);
         linkResource(link, assets);
     }
 

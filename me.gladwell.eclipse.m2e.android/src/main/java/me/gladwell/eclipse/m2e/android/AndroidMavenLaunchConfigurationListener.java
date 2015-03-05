@@ -30,7 +30,7 @@ import org.eclipse.m2e.core.internal.IMavenConstants;
 import org.eclipse.m2e.core.project.IMavenProjectChangedListener;
 import org.eclipse.m2e.core.project.MavenProjectChangedEvent;
 
-import org.eclipse.andmore.AdtConstants;
+import org.eclipse.andmore.AndmoreAndroidConstants;
 
 public class AndroidMavenLaunchConfigurationListener implements ILaunchConfigurationListener,
         IMavenProjectChangedListener {
@@ -55,7 +55,7 @@ public class AndroidMavenLaunchConfigurationListener implements ILaunchConfigura
 
             if (!configuration.getAttributes().containsValue(ANDROID_TEST_CLASSPATH_PROVIDER)
                     && configuration.getType().getIdentifier().equals("org.eclipse.jdt.junit.launchconfig")
-                    && project.hasNature(AdtConstants.NATURE_DEFAULT) && project.hasNature(IMavenConstants.NATURE_ID)) {
+                    && project.hasNature(AndmoreAndroidConstants.NATURE_DEFAULT) && project.hasNature(IMavenConstants.NATURE_ID)) {
                 final ILaunchConfigurationWorkingCopy workingCopy = configuration.getWorkingCopy();
                 workingCopy.setAttribute(ATTR_CLASSPATH_PROVIDER, ANDROID_TEST_CLASSPATH_PROVIDER);
                 new WorkspaceJob("Update launch configuration") {

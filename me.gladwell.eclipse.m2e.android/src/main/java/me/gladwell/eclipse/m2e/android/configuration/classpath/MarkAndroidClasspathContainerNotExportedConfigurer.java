@@ -11,7 +11,7 @@ package me.gladwell.eclipse.m2e.android.configuration.classpath;
 import me.gladwell.eclipse.m2e.android.project.EclipseAndroidProject;
 import me.gladwell.eclipse.m2e.android.project.MavenAndroidProject;
 
-import org.eclipse.andmore.AdtConstants;
+import org.eclipse.andmore.AndmoreAndroidConstants;
 
 public class MarkAndroidClasspathContainerNotExportedConfigurer implements ClasspathConfigurer {
 
@@ -20,7 +20,7 @@ public class MarkAndroidClasspathContainerNotExportedConfigurer implements Class
     }
 
     public void configure(MavenAndroidProject mavenProject, EclipseAndroidProject eclipseProject) {
-        eclipseProject.getClasspath().markNotExported(AdtConstants.CONTAINER_PRIVATE_LIBRARIES);
+        eclipseProject.getClasspath().markNotExported(AndmoreAndroidConstants.CONTAINER_PRIVATE_LIBRARIES);
     }
 
 }

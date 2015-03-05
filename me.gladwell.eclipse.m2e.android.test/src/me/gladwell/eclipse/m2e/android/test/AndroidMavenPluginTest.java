@@ -15,6 +15,7 @@ import static me.gladwell.eclipse.m2e.android.test.IResources.rename;
 import static me.gladwell.eclipse.m2e.android.test.ProjectImporter.importAndroidTestProject;
 import static org.eclipse.jdt.core.IClasspathAttribute.IGNORE_OPTIONAL_PROBLEMS;
 
+import org.eclipse.andmore.AndmoreAndroidConstants;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
@@ -32,7 +33,7 @@ public class AndroidMavenPluginTest extends AndroidMavenPluginTestCase {
     public void testConfigureNonAndroidProject() throws Exception {
         IProject project = importAndroidProject(SIMPLE_PROJECT_NAME);
 
-        assertFalse("configurer added android nature", project.hasNature(AdtConstants.NATURE_DEFAULT));
+        assertFalse("configurer added android nature", project.hasNature(AndmoreAndroidConstants.NATURE_DEFAULT));
         IJavaProject javaProject = JavaCore.create(project);
         assertFalse("output location set to android value for non-android project", javaProject.getOutputLocation()
                 .toString().equals("/" + SIMPLE_PROJECT_NAME + "/target/android-classes"));
@@ -61,7 +62,7 @@ public class AndroidMavenPluginTest extends AndroidMavenPluginTestCase {
                 "android-internaldirassets/pom.xml" });
         IProject project = projects[1];
 
-        assertEquals(project.getLocation().append("assets2"), project.getFolder(AdtConstants.WS_ASSETS).getLocation());
+        assertEquals(project.getLocation().append("assets2"), project.getFolder(AndmoreAndroidConstants.WS_ASSETS).getLocation());
     }
 
     public void testNonDefaultExternalAssetsFolderCompiles() throws Exception {
@@ -77,7 +78,7 @@ public class AndroidMavenPluginTest extends AndroidMavenPluginTestCase {
                 "android-relativeoutside/pom.xml" });
         IProject project = projects[1];
 
-        assertEquals(projects[0].getLocation().append("outsideassets"), project.getFolder(AdtConstants.WS_ASSETS).getLocation());
+        assertEquals(projects[0].getLocation().append("outsideassets"), project.getFolder(AndmoreAndroidConstants.WS_ASSETS).getLocation());
     }
     
     public void testNonDefaultResourceFolderLinkCreated() throws Exception {
