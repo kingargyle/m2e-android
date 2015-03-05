@@ -2,10 +2,10 @@
 <feature
       id="me.gladwell.eclipse.m2e.android.feature"
       label="Android for Maven Eclipse"
-      version="1.2.1.qualifier"
+      version="1.2.2.qualifier"
       provider-name="Gladwell.me">
 
-   <description url="http://rgladwell.github.com/m2e-android/">
+   <description url="http://rgladwell.github.io/m2e-android/">
       Integration for the Android Development Tools and the M2Eclipse
 Maven2 plugin.
    </description>
@@ -240,7 +240,7 @@ to a jury trial in any resulting litigation.
    </license>
 
    <url>
-      <update label="m2e-android Update Site" url="http://rgladwell.github.com/m2e-android/updates/"/>
+      <update label="m2e-android Update Site" url="http://rgladwell.github.io/m2e-android/updates/"/>
    </url>
 
    <requires>
@@ -263,7 +263,7 @@ to a jury trial in any resulting litigation.
          id="me.gladwell.eclipse.m2e.android"
          download-size="0"
          install-size="0"
-         version="1.2.1.qualifier"
+         version="1.2.2.qualifier"
          unpack="false"/>
 
 </feature>
